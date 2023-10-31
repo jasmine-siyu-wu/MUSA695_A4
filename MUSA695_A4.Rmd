@@ -1,0 +1,118 @@
+---
+title: "#30DayMapChallenge 2023"
+author: "Jasmine Siyu Wu"
+date: "10/18/2023"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    code_folding: hide
+  ioslides_presentation:
+    self-included: yes
+  pdf_document:
+    toc: yes
+---
+
+
+You will be participating in the 30-day mapping challenge! For this class, you will
+be required to submit a map for at least 10 of the days above. Your map should be 
+posted to your GitHub Repo on the corresponding day and if you have an account, 
+post on social media with the hashtag #30DayMapChallenge and tag the MUSA program also of course!
+
+
+If you just post 10 maps on the last day, I won't be happy. Feel free to plan ahead. 
+The map doesn't have to be perfect but try to use our data visualization design 
+principles. You can use any mapping package. 
+
+
+Please organize your repo so that it also includes a Folder for the outputs and 
+save each map as a file (png or jpeg). Document your R markdown. Make that pretty - also.
+
+**1. Points**
+
+**2. Lines**
+
+**3. Polygons**
+
+4. A bad map
+
+5. Analog Map
+
+**6. Asia**
+
+7. Navigation
+
+8. Africa
+
+**9. Hexagons**
+
+**10. North America**
+
+11. Retro
+
+12. South America
+
+**13. Choropleth**
+
+14. Europe
+
+**15. OpenStreetMap**
+
+16. Oceania
+
+**17. Flow**
+
+18. Atomosphere
+
+19. 5 minute map
+
+20. Ourdoors
+
+21. Raster
+
+22. North is not always up
+
+23. 3D
+
+**24. Black & white**
+
+25. Antarctica
+
+**26. Minimal**
+
+**27. Dot**
+
+28. Is this a chart or a map?
+
+**29. Population**
+
+30. "My favoyrite ..."
+
+
+
+```{r libraries, include=TRUE, cache = FALSE, message = FALSE, warning = FALSE, results=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#Loading Libraries
+library(tidyverse)
+library(knitr)
+library(ggplot2)
+library(grid)
+library(gridExtra)
+library(kableExtra)
+library(dplyr)
+library(ggtext)
+library(grid)
+library(gridExtra)
+library(gridtext)
+
+options(scipen=1)  #999
+
+```
+
+
+
+
+
+
+
