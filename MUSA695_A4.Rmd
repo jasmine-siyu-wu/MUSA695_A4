@@ -33,13 +33,13 @@ save each map as a file (png or jpeg). Document your R markdown. Make that prett
 | **1** | **Points** | A map with points |
 | 2 | Lines | A map with lines |
 | **3** | **Polygons** | A map with polygons |
-| 4 | A bad map | Let's get this over with |
+| **4** | **A bad map** | Let's get this over with |
 | 5 | Analog Map | Non-digital maps |
 | **6** | **Asia** | Largest of the continents |
 | 7 | Navigation | A map that helps you to navigate |
 | 8 | Africa | Second-largest and second-most populous continent |
 | **9** | **Hexagons** | 6 sides, 6 angles, and 6 vertices |
-| **10** | **North America** | Northern part of the American continent |
+| 10 | North America | Northern part of the American continent |
 | 11 | Retro | A blast from the past |
 | 12 | South America | Southern part of the American continent |
 | 13 | Choropleth | Classic thematic map: a choropleth |
@@ -53,12 +53,12 @@ save each map as a file (png or jpeg). Document your R markdown. Make that prett
 | 21 | Raster | Pixels, please |
 | 22 | North is not always up | ⬆️ |
 | 23 | 3D | The third dimension |
-| **24** | **Black & white** | Only two colors allowed |
+| 24 | Black & white | Only two colors allowed |
 | 25 | Antarctica | A cold continent that can't be reached with Web Mercator |
 | **26** | **Minimal** | Less is more |
 | **27** | **Dot** | Dot density, a single dot in space or something different |
 | 28 | Is this a chart or a map? | In thematic maps, you can't always tell. Try to stretch the limits |
-| **29** | **Population** | A classic theme for a map |
+| 29 | Population | A classic theme for a map |
 | 30 | "My favorite.." | You choose! |
 
 
@@ -92,71 +92,6 @@ options(scipen=1)  #999
 
 ```{r set up theme, include=TRUE, cache = FALSE, message = FALSE, results=FALSE}
 
-# map_theme <- function () {
-#       font <- "serif" 
-#       theme_minimal() %+replace% # replace elements we want to see
-#       
-#       theme(
-#         ## Grid elements
-#         panel.grid.major= element_line(colour="#dddddd",size=.1), #element_blank(), #
-#         panel.grid.minor = element_blank(),
-#         #axis.line = element_line(colour="#D0D0D0",size=.2),
-#         #axis.ticks = element_blank(),
-# 
-#         ## Text elements
-#         plot.title = element_text(
-#           family = font,
-#           size = 13,
-#           lineheight = 0.75,
-#           color = "#222222",
-#           face = 'bold',
-#           hjust = 0.65,
-#           vjust = 0,
-#           margin = margin(l=10, t=10, b=20, unit="pt")),
-#         
-#         #panel.background = element_rect(fill = "#eeeeee"),
-#         plot.background = element_blank(),
-#         
-#         plot.subtitle = element_text(
-#           family = font,
-#           size = 12,
-#           color = "#222222"),
-#         
-#         plot.caption = element_text(
-#           family = font,
-#           size = 9,
-#           hjust = 1,
-#           vjust = -1,
-#           margin = margin(6, 0, 6, 0, "pt")),
-#         
-#         axis.text = element_text(
-#           family=font,
-#           size = 10),
-# 
-#         
-#         axis.title.y = element_text(
-#           family = font,
-#           color = "#222222",
-#           face = 'bold',
-#           size = 12,
-#           hjust = 1, 
-#           #vjust = 1,
-#           margin = margin(0, 6, 0, 6, "pt")),
-#         
-#         axis.title.x = element_text(
-#           family = font,
-#           color = "#222222",
-#           face = 'bold',
-#           size = 12,
-#           #hjust = 0, 
-#           margin = margin(6, 0, 6, 0, "pt")),
-#         
-#         plot.margin = margin(.25,.25,.25,.25,"cm")
-#         )
-#       # legend often requires manual tweaking based on plot content so don't define it here
-# }
-
-
 
 map_theme <- function(base_size = 12) {
   theme(plot.title =element_text(size=12),
@@ -187,7 +122,7 @@ map_theme <- function(base_size = 12) {
 
 Data sources: 
 
-[All the Airports Across The World Dataset][https://www.kaggle.com/datasets/timmofeyy/all-the-airport-across-the-world-dataset?select=airports_data.csv]
+[All the Airports Across The World Dataset](https://www.kaggle.com/datasets/timmofeyy/all-the-airport-across-the-world-dataset?select=airports_data.csv)
 
 1. **IATA** stands for the International Air Transport Association. It is a global trade association representing airlines and the air transport industry. IATA's main objective is to promote safe, reliable, and efficient air transportation. It establishes industry standards, provides training and support services, and advocates for the interests of its member airlines. IATA also develops and maintains industry codes, such as airline and airport codes, to ensure uniformity and efficiency in air travel operations worldwide.
 
@@ -239,7 +174,8 @@ us <- st_transform(us, crs = 'EPSG:5070')
 cont_us <- us%>% filter(NAME != 'Alaska' & NAME != 'Hawaii')
 
 ```
-[USA top international airports Dec 2022][https://simpleflying.com/usa-top-international-airports-december-2022/#:~:text=Of%20major%20airports%2C%20Miami%20leapfrogs,7.4%25)%2C%20and%20many%20more]
+
+[USA top international airports Dec 2022](https://simpleflying.com/usa-top-international-airports-december-2022/#:~:text=Of%20major%20airports%2C%20Miami%20leapfrogs,7.4%25)%2C%20and%20many%20more)
 
 ```{r point map, include=TRUE, cache = FALSE, message = FALSE, warning = FALSE, fig.height=6, fig.width=9}
 plot_data <- usa_top_intl_airports %>% 
@@ -433,7 +369,7 @@ ggplot() +
 
 ## Day 3: Polygons map [AA, United, and Delta internatioal flight destinations]
 
-This map still uses [All the Airports Across The World Dataset][https://www.kaggle.com/datasets/timmofeyy/all-the-airport-across-the-world-dataset?select=airports_data.csv], specifically its *airlines_country.csv*.
+This map still uses [All the Airports Across The World Dataset](https://www.kaggle.com/datasets/timmofeyy/all-the-airport-across-the-world-dataset?select=airports_data.csv), specifically its *airlines_country.csv*.
 
 ```{r polygon map, include=TRUE, cache = FALSE, message = FALSE, warning = FALSE, fig.height=6, fig.width=10}
 
@@ -538,10 +474,48 @@ ggplot()+
 
 ```
 
+## Day 4: Bad map [Global entry to United States]
+
+Data were retrieved from [Airports with Global Entry](https://www.cbp.gov/travel/trusted-traveler-programs/global-entry/airports-with-global-entry)
+
+```{r black white map, include=TRUE, cache = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=9}
+
+
+ggplot() +
+  geom_sf(data = countries %>% filter(NAME_ENGL != "United States"),
+          fill = "#aaaaaa", color="#222222", linewidth = 0.1, alpha=0.8) +
+    geom_sf(data = countries %>% filter(NAME_ENGL == "United States"),
+          fill = "#ffffff", color="#222222", linewidth = 0.1, alpha=0.8) +
+  geom_sf(data = airports_global_entry, size=1,
+          col = "#EC7E00") +
+  # geom_richtext(aes(x = plot_data[plot_data$iata=="JFK",]$long_new,
+  #                   y = plot_data[plot_data$iata=="JFK",]$lat_new,
+  #               label = "JFK (38% int. flights)"),
+  #               size = 3.5, position = "identity", fontface="bold",                
+  #               fill = NA, label.color = NA, color="#EC7E00",
+  #               hjust=-0.1, vjust=0.1) +
+  # geom_richtext(aes(x = usa_top_intl_airports[usa_top_intl_airports$iata=="MIA",]$long, 
+  #                    y = usa_top_intl_airports[usa_top_intl_airports$iata=="MIA",]$lat,
+  #                    label = "Miami International Airport \nInternaional flights: 43.10%"), size = 3,
+  #                    fill = NA, label.color = NA, color="#FB8500") +
+  labs(title = "Bad map: Global entry airports to the United States", 
+       caption = "Data source: U.S. Customs and Border Protection | Jasmine Siyu Wu") +
+  map_theme()+
+  theme(plot.title = element_markdown(size = 13, face = "bold", colour = "#ffffff"),
+        plot.subtitle = element_text(size=10, color = "#ffffff"),
+        plot.caption = element_text(size = 6, color = "#ffffff"),
+        legend.title = element_text(size = 9, color = "#ffffff"),
+        legend.text = element_text(size = 8, color = "#ffffff"),
+        legend.position = c(0.3, 0.05),
+        legend.key = element_rect(fill = "transparent") )
+
+# ggsave("day4.jpeg", device = "jpeg", width = 9, height=5,
+#        path = "Output")
+```
 
 ## Day 6: Asia [Busiest airports in Asia]
 
-This map uses the data retrived from [Busiest airports in Asia, weekly August 2023 flights][https://simpleflying.com/asia-busiest-airports-august-2023/]. Opened in 2021, Chengdu Tianfu International Airport became the 8th busiest airport in Asia in August 2023.
+This map uses the data retrived from [Busiest airports in Asia, weekly August 2023 flights](https://simpleflying.com/asia-busiest-airports-august-2023/). Opened in 2021, Chengdu Tianfu International Airport became the 8th busiest airport in Asia in August 2023.
 
 
 ```{r asia map, include=TRUE, cache = FALSE, message = FALSE, warning = FALSE, fig.height=6, fig.width=9}
@@ -785,8 +759,8 @@ ggplot() +
         legend.text = element_text(size = 8, color = "#ffffff"),
         legend.position = c(0.3, 0.02))
 
-ggsave("day9.jpeg", device = "jpeg", width = 9, height=8,
-       path = "Output")
+# ggsave("day9.jpeg", device = "jpeg", width = 9, height=8,
+#        path = "Output")
 
 ```
 
@@ -797,44 +771,48 @@ ggsave("day9.jpeg", device = "jpeg", width = 9, height=8,
 
 This map uses OpenStreetMap data, including features of motorway, primary, secondary, tertiary, residential, living street, unclassified, service, and footway.
 
+Note: Since the data is too large to load when knitting the RMarkdown, I mute the code and directly read in the saved plot.
+
+![OpenStreetMap street network](./Output/day15.jpeg)
+
 ```{r openstreetmap, include=TRUE, cache = FALSE, message = FALSE, warning = FALSE, fig.height=8, fig.width=9}
 
-library(osmdata)
-
-
-pitts_bb <- getbb("Pittsburgh", display_name_contains = "United States")
-
-
-# retrieving data of streets in Pittsburgh
-pitts_streets <- pitts_bb %>%
-  opq() %>%
-  add_osm_feature("highway", c("motorway", "primary", "secondary", "tertiary")) %>%
-  osmdata_sf()
-
-# retrieving data of small streets in Pittsburgh
-pitts_small_streets <- pitts_bb %>%
-  opq() %>%
-  add_osm_feature(key = "highway", value = c("residential", "living_street", "unclassified", "service", "footway")) %>%
-  osmdata_sf()
-
-
-# visualising all retrieved features over each other to form a black and white map of Pittsburgh's street network
-ggplot() +
-  geom_sf(data = pitts_streets$osm_lines, inherit.aes = FALSE, color = "#ffffff", size = .5) +
-  geom_sf(data = pitts_small_streets$osm_lines, inherit.aes = FALSE, color = "#8a8a8a", size = .1, alpha = .6) +
-  # geom_sf(data = pitts_rivers$osm_lines, inherit.aes = FALSE, color = "#aaaaaa", linewidth=4, alpha = .4) +
-  geom_sf(data = halo_sf, fill = "#222222", alpha=0.9, color="transparent") +
-  labs(title = "OpenStreetMap Street network",
-       subtitle = "Pittsburgh, PA, US",
-       caption = "Data source: OpenStreetMap | Jasmine Siyu Wu") +
-  coord_sf(xlim = c(pitts_bb[1,1], pitts_bb[1,2]), ylim = c(pitts_bb[2,1], pitts_bb[2,2]), expand = FALSE) +
-  map_theme() +
-  theme(plot.title = element_text(size = 15, face = "bold", color = "#ffffff"),
-        plot.subtitle = element_text(size=13, color = "#ffffff"),
-        plot.caption = element_text(size = 8, color = "#ffffff"),
-        legend.title = element_text(size = 9, color = "#ffffff"),
-        legend.text = element_text(size = 8, color = "#ffffff"),
-        legend.position = c(0.7, 0.02))
+# library(osmdata)
+# 
+# 
+# pitts_bb <- getbb("Pittsburgh", display_name_contains = "United States")
+# 
+# 
+# # retrieving data of streets in Pittsburgh
+# pitts_streets <- pitts_bb %>%
+#   opq() %>%
+#   add_osm_feature("highway", c("motorway", "primary", "secondary", "tertiary")) %>%
+#   osmdata_sf()
+# 
+# # retrieving data of small streets in Pittsburgh
+# pitts_small_streets <- pitts_bb %>%
+#   opq() %>%
+#   add_osm_feature(key = "highway", value = c("residential", "living_street", "unclassified", "service", "footway")) %>%
+#   osmdata_sf()
+# 
+# 
+# # visualising all retrieved features over each other to form a black and white map of Pittsburgh's street network
+# ggplot() +
+#   geom_sf(data = pitts_streets$osm_lines, inherit.aes = FALSE, color = "#ffffff", size = .5) +
+#   geom_sf(data = pitts_small_streets$osm_lines, inherit.aes = FALSE, color = "#8a8a8a", size = .1, alpha = .6) +
+#   # geom_sf(data = pitts_rivers$osm_lines, inherit.aes = FALSE, color = "#aaaaaa", linewidth=4, alpha = .4) +
+#   geom_sf(data = halo_sf, fill = "#222222", alpha=0.9, color="transparent") +
+#   labs(title = "OpenStreetMap street network",
+#        subtitle = "Pittsburgh, PA, US",
+#        caption = "Data source: OpenStreetMap | Jasmine Siyu Wu") +
+#   coord_sf(xlim = c(pitts_bb[1,1], pitts_bb[1,2]), ylim = c(pitts_bb[2,1], pitts_bb[2,2]), expand = FALSE) +
+#   map_theme() +
+#   theme(plot.title = element_text(size = 15, face = "bold", color = "#ffffff"),
+#         plot.subtitle = element_text(size=13, color = "#ffffff"),
+#         plot.caption = element_text(size = 8, color = "#ffffff"),
+#         legend.title = element_text(size = 9, color = "#ffffff"),
+#         legend.text = element_text(size = 8, color = "#ffffff"),
+#         legend.position = c(0.7, 0.02))
 
 # ggsave("day15.jpeg", device = "jpeg", width = 9, height=8,
 #        path = "Output")
@@ -848,63 +826,6 @@ use `airlines_country` data
 ```{r flow map, include=TRUE, cache = FALSE, message = FALSE, warning = FALSE, fig.height=8, fig.width=9}
 
 
-# countries_centroids <- countries %>% 
-#   mutate(centroids = st_centroid(st_geometry(.)))
-# 
-# countries_centroids <- countries_centroids %>%
-#   mutate(lon = unlist(map(countries_centroids$centroids,1)),
-#          lat = unlist(map(countries_centroids$centroids,2))) %>%
-#   st_drop_geometry()
-# 
-# plot_data <- 
-#   countries_centroids %>% subset(AA == 1) %>% 
-#         select(CNTR_ID, CNTR_NAME, lat, lon) %>%
-#         rename("dest_ID" = CNTR_ID,
-#                "dest_name" = CNTR_NAME) %>%
-#         mutate(airline = "AA") %>% 
-#   rbind(., 
-#         countries_centroids %>% subset(AS == 1) %>% 
-#         select(CNTR_ID, CNTR_NAME, lat, lon) %>%
-#         rename("dest_ID" = CNTR_ID,
-#                "dest_name" = CNTR_NAME) %>%
-#         mutate(airline = "AS")) %>%
-#   rbind(.,
-#         countries_centroids %>% subset(UA == 1) %>% 
-#         select(CNTR_ID, CNTR_NAME, lat, lon) %>%
-#         rename("dest_ID" = CNTR_ID,
-#                "dest_name" = CNTR_NAME) %>%
-#         mutate(airline = "UA")) %>%
-#   rbind(.,
-#         countries_centroids %>% subset(DL == 1) %>% 
-#         select(CNTR_ID, CNTR_NAME, lat, lon) %>%
-#         rename("dest_ID" = CNTR_ID,
-#                "dest_name" = CNTR_NAME) %>%
-#         mutate(airline = "DL")) %>%
-#   mutate(origin_ID = "US",
-#          origin_name = "United States",
-#          dest_lat = lat, dest_lon = lon,
-#          origin_lat = countries_centroids[countries_centroids$CNTR_ID == "US", ]$lat,
-#          origin_lon = countries_centroids[countries_centroids$CNTR_ID == "US", ]$lon)
-# 
-# plot_data <- plot_data %>% 
-#   mutate(color = case_when(airline == "DL" ~ "#b21f36",
-#                            airline == "AA" ~ "#4c9ed6",
-#                            airline == "AS" ~ "#17385f",
-#                            airline == "UA" ~ "#2d5daa"))
-# 
-# 
-# ggplot()+
-#   geom_sf(data = countries, fill = "#aaaaaa", color="#222222", linewidth=0.2) +
-#   geom_segment(data=plot_data, 
-#                aes(x=origin_lon, y=origin_lat, 
-#                    xend=dest_lon, yend=dest_lat,
-#                    color = color), linewidth=0.8)+
-#   scale_color_identity() +
-#   facet_wrap(~airline) +
-#   #scale_alpha_continuous(range = c(0.03, 0.3))+
-#   map_theme() +
-#   scale_x_continuous("", breaks=NULL) +
-#   scale_y_continuous("", breaks=NULL)
 library(lehdr)
 
 od_Pitts_2021 <- grab_lodes(
@@ -979,52 +900,18 @@ ggplot(data=plot_data[which(plot_data$S000>5),], aes(x=h_bg_lon, y=h_bg_lat))+
         legend.position = c(0.28, 0.02))
 
 
-ggsave("day17.jpeg", device = "jpeg", width = 9, height=8,
-       path = "Output")
-  
+# ggsave("day17.jpeg", device = "jpeg", width = 9, height=8,
+#        path = "Output")
 
 ```
 
 
 
-## Day 24: Black & White map [Global entry to United States]
 
-Data were retrieved from [Airports with Global Entry][https://www.cbp.gov/travel/trusted-traveler-programs/global-entry/airports-with-global-entry]
-
-```{r black white map, include=TRUE, cache = FALSE, message = FALSE, warning = FALSE, fig.height=6, fig.width=9}
-
-
-ggplot() +
-  geom_sf(data = countries,
-          fill = "transparent", color="#222222", linewidth = 0.1) +
-  geom_sf(data = airports_global_entry, size=1,
-          col = "#ffffff") +
-  # geom_richtext(aes(x = plot_data[plot_data$iata=="JFK",]$long_new,
-  #                   y = plot_data[plot_data$iata=="JFK",]$lat_new,
-  #               label = "JFK (38% int. flights)"),
-  #               size = 3.5, position = "identity", fontface="bold",                
-  #               fill = NA, label.color = NA, color="#EC7E00",
-  #               hjust=-0.1, vjust=0.1) +
-  # geom_richtext(aes(x = usa_top_intl_airports[usa_top_intl_airports$iata=="MIA",]$long, 
-  #                    y = usa_top_intl_airports[usa_top_intl_airports$iata=="MIA",]$lat,
-  #                    label = "Miami International Airport \nInternaional flights: 43.10%"), size = 3,
-  #                    fill = NA, label.color = NA, color="#FB8500") +
-  labs(title = "Global entry airports to United States", 
-       caption = "Data source: U.S. Customs and Border Protection | Jasmine Siyu Wu") +
-  map_theme()+
-  theme(plot.title = element_markdown(size = 13, face = "bold"),
-        plot.subtitle = element_text(size=10, color = "#ffffff"),
-        plot.caption = element_text(size = 6, color = "#ffffff"),
-        legend.title = element_text(size = 9, color = "#ffffff"),
-        legend.text = element_text(size = 8, color = "#ffffff"),
-        legend.position = c(0.3, 0.05),
-        legend.key = element_rect(fill = "transparent") )
-
-```
 
 ## Day 26: Minimal map [Pittsburgh bridges by age] 
 
-Data source: [U.S. Department of Transportation Bureau of Transportation Statistics (National Bridge Inventory)][https://geodata.bts.gov/datasets/usdot::national-bridge-inventory/about]
+Data source: [U.S. Department of Transportation Bureau of Transportation Statistics (National Bridge Inventory)](https://geodata.bts.gov/datasets/usdot::national-bridge-inventory/about)
 
 
 ```{r minimal map, include=TRUE, cache = FALSE, message = FALSE, warning = FALSE, fig.height=8, fig.width=9}
@@ -1080,7 +967,7 @@ ggsave("day26.jpeg", device = "jpeg", width = 9, height=8,
 
 ## Day 27: Dot map -[All world airports, colored by altitude]
 
-This map uses [All the Airports Across The World Dataset][https://www.kaggle.com/datasets/timmofeyy/all-the-airport-across-the-world-dataset?select=airports_data.csv], which contains altitude of airports.
+This map uses [All the Airports Across The World Dataset](https://www.kaggle.com/datasets/timmofeyy/all-the-airport-across-the-world-dataset?select=airports_data.csv), which contains altitude of airports.
 
 ```{r dot map, include=TRUE, cache = FALSE, message = FALSE, warning = FALSE, fig.height=6, fig.width=10}
 
