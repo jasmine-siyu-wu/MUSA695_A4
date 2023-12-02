@@ -58,7 +58,7 @@ save each map as a file (png or jpeg). Document your R markdown. Make that prett
 | **26** | **Minimal** | Less is more |
 | **27** | **Dot** | Dot density, a single dot in space or something different |
 | 28 | Is this a chart or a map? | In thematic maps, you can't always tell. Try to stretch the limits |
-| 29 | Population | A classic theme for a map |
+| **29** | **Population** | A classic theme for a map |
 | 30 | "My favorite.." | You choose! |
 
 
@@ -630,7 +630,7 @@ ggplot() +
 
 
 
-## Day 9: Hexagons map [Job density of Pittsburgh]
+## Day 9: Hexagons map [Job distribution by hexagons, Pittsburgh]
 
 Longitudinal Employer-Household Dynamics (LEHD) Origin-Destination Employment Statistics (LODES) data were retrieved using package `lehdr`.
 
@@ -764,8 +764,6 @@ ggplot() +
 
 ```
 
-## Day 10: North America map
-
 
 ## Day 15: OpenStreetMap [Streetnetwork of Pittsburgh, PA]
 
@@ -819,9 +817,9 @@ Note: Since the data is too large to load when knitting the RMarkdown, I mute th
 ```
 
 
-## Day 17: Flow map [Destinations of American, Delta, Southwest, United, and Alaska airlines]
+## Day 17: Flow map [Journeys to work in Pittsburgh]
 
-use `airlines_country` data
+This map still uses the Longitudinal Employer-Household Dynamics (LEHD) Origin-Destination Employment Statistics (LODES) data retrieved using package `lehdr`.
 
 ```{r flow map, include=TRUE, cache = FALSE, message = FALSE, warning = FALSE, fig.height=8, fig.width=9}
 
@@ -873,7 +871,7 @@ ggplot(data=plot_data[which(plot_data$S000>5),], aes(x=h_bg_lon, y=h_bg_lat))+
             filter(!is.na(totjobs)), 
           aes(fill=totjobs),
           inherit.aes = FALSE, 
-          alpha=0.3, color="transparent") +
+          alpha=0.2, color="transparent") +
   scale_fill_gradientn(colours = cols5,
                         values = rescale(c(0, 2500, 5000, 10000, 20000, 33000)), 
                         limits=c(0, 32887),
@@ -886,7 +884,7 @@ ggplot(data=plot_data[which(plot_data$S000>5),], aes(x=h_bg_lon, y=h_bg_lat))+
                         )+
   geom_segment(data=plot_data[which(plot_data$S000>5),], 
                aes(x=h_bg_lon, y=h_bg_lat, xend=w_bg_lon, yend=w_bg_lat, alpha=S000),
-               linewidth=0.3, col="#ffffff", show.legend = FALSE,
+               linewidth=0.4, col="#ffffff", show.legend = FALSE,
                arrow = arrow(length = unit(0.02, "inches")))+
   scale_alpha_continuous(range = c(0.05, 0.5))+
   labs(title = "Journeys to work in Pittsburgh",
@@ -909,7 +907,7 @@ ggplot(data=plot_data[which(plot_data$S000>5),], aes(x=h_bg_lon, y=h_bg_lat))+
 
 
 
-## Day 26: Minimal map [Pittsburgh bridges by age] 
+## Day 26: Minimal map [Pittsburgh bridges by built year] 
 
 Data source: [U.S. Department of Transportation Bureau of Transportation Statistics (National Bridge Inventory)](https://geodata.bts.gov/datasets/usdot::national-bridge-inventory/about)
 
@@ -1075,13 +1073,80 @@ ggplot() +
 ```
 
 
-## Day 29: Population map [Population density in UK]
+## Day 29: Population map [Jobs for young workers in Pittsburgh]
 
 
-https://www.data.gov.uk/dataset/ca2daae8-8f36-4279-b15d-78b0463c61db/uk-gridded-population-2011-based-on-census-2011-and-land-cover-map-2015
+The following maps still use the Longitudinal Employer-Household Dynamics (LEHD) Origin-Destination Employment Statistics (LODES) data retrieved using package `lehdr`.
 
-```{r population map}
+```{r population map, include=TRUE, cache = FALSE, message = FALSE, warning = FALSE, fig.height=8, fig.width=9}
+plot_data <- od_Pitts_2021 %>% 
+  group_by(w_bg) %>%
+  summarise(S000 = sum(S000),
+            SA01 = sum(SA01),
+            SA02 = sum(SA02),
+            SA03 = sum(SA03),
+            SA01_share = SA01/S000) %>%
+  merge(pitts_bg_2021 %>% st_transform(st_crs(pitts_bg_2021)) %>%
+            filter(!is.na(totjobs)), .,
+        by.x="GEOID", by.y="w_bg")
+  
+  
+cols5 <- c("#FDF0E2", "#FAD1A2","#EAB67A", "#FA9522", "#EC7E00")
 
+ggplot()+
+  geom_sf(data= plot_data, 
+          aes(fill=SA01),
+          inherit.aes = FALSE, 
+          color="transparent") +
+  scale_fill_gradientn(colours = cols5,
+                        values = rescale(c(0, 100, 500, 1000, 2500, 5150)), 
+                        limits=c(0, 5139),
+                        guide=guide_colourbar(raster=TRUE,
+                                              barwidth=15, barheight = 0.3,
+                                              frame.colour="transparent",
+                                              frame.linewidth=0.5, ticks.colour="#222222", 
+                                              direction="horizontal",
+                                              title = "Total jobs for \nworkers < 30")
+                        )+
+  labs(title = "<span style='color:#ffffff'>Where do</span> <span style='color:#EC7E00'>young people</span> <span style='color:#ffffff'>work in Pittsburgh?</span>",
+       caption = "Data source: Longitudinal Employer-Household Dynamics (LEHD) Origin-Destination Employment Statistics (LODES) | Jasmine Siyu Wu") +
+  map_theme() +
+  theme(plot.title = element_markdown(size = 15, face = "bold"),
+        plot.subtitle = element_text(size=12, color = "#ffffff"),
+        plot.caption = element_text(size = 8, color = "#ffffff"),
+        legend.title = element_text(size = 9, color = "#ffffff"),
+        legend.text = element_text(size = 8, color = "#ffffff"),
+        legend.position = c(0.28, 0.02))
+
+# ggsave("day29.jpeg", device = "jpeg", width = 9, height=8,
+#        path = "Output")
+
+
+
+plot_data <- plot_data %>% mutate(SA01_10 = round(SA01/10, digits=0))
+plot_points <- st_sample(plot_data, size=plot_data$SA01_10)
+
+
+ggplot()+
+  geom_sf(data = pitts_streets$osm_lines, inherit.aes = FALSE, 
+          color = "#aaaaaa", linewidth=0.5, alpha=0.5) +
+  geom_sf(data = halo_sf, fill = "#222222", alpha=0.8, color="transparent") +
+  geom_sf(data= plot_points, 
+          color="#EC7E00", size=0.5,
+          inherit.aes = FALSE) +
+  coord_sf(xlim = c(pitts_bb[1,1], pitts_bb[1,2]), ylim = c(pitts_bb[2,1], pitts_bb[2,2]), expand = FALSE) +
+  labs(title = "<span style='color:#ffffff'>Where do</span> <span style='color:#EC7E00'>young people</span> <span style='color:#ffffff'>work in Pittsburgh?</span>",
+       caption = "Data source: Longitudinal Employer-Household Dynamics (LEHD) Origin-Destination Employment Statistics (LODES) | Jasmine Siyu Wu\nNote: One dot represents 10 people.") +
+  map_theme() +
+  theme(plot.title = element_markdown(size = 15, face = "bold"),
+        plot.subtitle = element_text(size=12, color = "#ffffff"),
+        plot.caption = element_text(size = 8, color = "#ffffff"),
+        legend.title = element_text(size = 9, color = "#ffffff"),
+        legend.text = element_text(size = 8, color = "#ffffff"),
+        legend.position = c(0.28, 0.02))
+
+# ggsave("day29_v2.jpeg", device = "jpeg", width = 9, height=8,
+#        path = "Output")
 
 ```
 
